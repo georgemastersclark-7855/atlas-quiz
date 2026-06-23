@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Atlas Testosterone Vitality Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Fraunces = web stand-in for GT Alpina · Inter = stand-in for Söhne (swap for licensed fonts on live build) -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f2f2f0; --paper:#ffffff; --ink:#212121; --ink-soft:#54514b; --ink-faint:#8a8780;
+    --line:#e2ded4; --green:#0a3622; --green-d:#002c17; --forest:#002c17; --rust:#8a8780;
+    --amber:#b98c1d; --red:#a8442f;
+    --grad:linear-gradient(90deg,#a8442f 0%,#b98c1d 50%,#0a3622 100%);
+    --serif:"Fraunces",Georgia,serif; --sans:"Inter",-apple-system,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%;background:#e6e4de;color:var(--ink);font-family:var(--sans)}
+  .app{max-width:460px;margin:0 auto;min-height:100vh;background:var(--cream);display:flex;flex-direction:column;position:relative;overflow:hidden}
+  .top{position:sticky;top:0;z-index:20;padding:14px 18px 11px;background:linear-gradient(180deg,var(--cream) 70%,rgba(244,241,234,.7))}
+  .brandrow{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+  .logo{width:26px;height:26px;border-radius:6px;background:var(--green);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:500;font-size:16px;color:var(--cream)}
+  .brand{font-family:var(--sans);font-weight:800;letter-spacing:.12em;font-size:17px;color:var(--ink)}
+  .back{margin-left:auto;color:var(--ink-faint);font-size:13px;background:none;border:0;cursor:pointer;visibility:hidden}
+  .bar{height:5px;border-radius:99px;background:#e4ded2;overflow:hidden}
+  .fill{height:100%;width:0;border-radius:99px;background:var(--green);transition:width .5s cubic-bezier(.4,0,.2,1)}
+  .step{margin-top:6px;font-size:11px;color:var(--ink-faint);letter-spacing:.03em}
+  .wrap{flex:1;display:flex;flex-direction:column;justify-content:center;padding:18px 18px 30px}
+  .screen{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease}
+  .screen.in{opacity:1;transform:none}
+  .eyebrow{color:var(--rust);font-family:var(--sans);font-weight:600;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:11px}
+  h1{font-family:var(--sans);font-weight:800;font-size:28px;line-height:1.16;letter-spacing:-.012em;margin:0 0 12px}
+  h2{font-family:var(--serif);font-style:italic;font-weight:400;font-size:27px;line-height:1.18;letter-spacing:-.01em;margin:0 0 8px}
+  p.sub{color:var(--ink-soft);font-size:15px;line-height:1.55;margin:0 0 20px}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;align-items:center;gap:12px;padding:16px 15px;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);cursor:pointer;font-size:16px;font-weight:500;transition:.16s;user-select:none}
+  .opt:hover{border-color:#cdc6b7}
+  .opt .tick{margin-left:auto;width:22px;height:22px;border-radius:50%;border:2px solid #d7d0c2;flex:0 0 auto;transition:.16s}
+  .opt.sel{border-color:var(--green);background:#f3f8f4}
+  .opt.sel .tick{border-color:var(--green);background:var(--green);box-shadow:inset 0 0 0 3px var(--paper)}
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .tile{padding:20px 14px;text-align:center;border:1.5px solid var(--line);border-radius:13px;background:var(--paper);cursor:pointer;font-family:var(--serif);font-weight:800;font-size:20px;transition:.16s}
+  .tile:hover{border-color:var(--green)}
+  .tile small{display:block;font-family:var(--sans);color:var(--ink-faint);font-weight:500;font-size:11px;letter-spacing:.04em;text-transform:uppercase;margin-top:4px}
+  .btn{display:block;width:100%;border:0;border-radius:12px;padding:17px;font-size:15px;font-weight:600;color:var(--cream);background:var(--green);cursor:pointer;margin-top:20px;letter-spacing:.02em;transition:.15s}
+  .btn:hover{background:var(--green-d)}
+  .micro{text-align:center;color:var(--ink-faint);font-size:12px;margin-top:13px;line-height:1.5}
+  .seg{display:flex;gap:6px;background:#ece7dc;border-radius:11px;padding:4px;margin:0 0 12px}
+  .seg button{flex:1;border:0;background:none;padding:10px;border-radius:8px;font-family:var(--sans);font-weight:600;font-size:13px;color:var(--ink-soft);cursor:pointer}
+  .seg button.on{background:var(--paper);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  .slabel{display:flex;justify-content:space-between;color:var(--ink-faint);font-size:13px;margin:24px 4px 8px}
+  input[type=range]{width:100%;-webkit-appearance:none;height:7px;border-radius:99px;background:var(--grad);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;border:4px solid var(--green);cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.25)}
+  .slval{text-align:center;font-family:var(--serif);font-size:48px;font-weight:800;margin:14px 0 0;color:var(--green)}
+  .field{display:flex;gap:10px;margin-top:6px}
+  .inp{flex:1;background:var(--paper);border:1.5px solid var(--line);border-radius:11px;padding:16px;color:var(--ink);font-size:16px;font-weight:500;font-family:var(--sans)}
+  .inp:focus{outline:none;border-color:var(--green)}
+  .inp::placeholder{color:var(--ink-faint)}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:22px;text-align:center}
+  .card.warn{border-color:#e6cdc6;background:linear-gradient(180deg,#fbf2f0,var(--paper))}
+  .icon{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:27px;margin:0 auto 14px}
+  .icon.ok{background:#eaf3ee;color:var(--green)} .icon.warn{background:#f6e7e3;color:var(--red)}
+  .card p{color:var(--ink-soft);font-size:15px;line-height:1.6;margin:8px 0 0}
+  .cite{color:var(--ink-faint);font-size:11px;margin-top:14px;font-style:italic}
+  .slidein{margin:16px -2px 2px;height:118px;border-radius:11px;background:#ece7dc;border:1px dashed #cdc6b7;display:flex;align-items:center;justify-content:center;color:var(--ink-faint);font-size:11px;letter-spacing:.04em;transform:translateX(50px);opacity:0;transition:.6s .15s}
+  .screen.in .slidein{transform:none;opacity:1}
+  .hero{height:170px;border-radius:13px;background:#ece7dc;border:1px dashed #cdc6b7;display:flex;align-items:center;justify-content:center;color:var(--ink-faint);font-size:11px;letter-spacing:.04em;text-align:center;margin:8px 0 4px;padding:0 16px}
+  .heroimg{width:100%;height:190px;object-fit:cover;object-position:50% 26%;border-radius:13px;display:block;margin:8px 0 4px}
+  .bimg img{width:100%;height:100%;object-fit:cover;object-position:50% 32%}
+  .slidein img{width:100%;height:100%;object-fit:cover;object-position:50% 28%}
+  .btiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .btile{border:1.5px solid var(--line);border-radius:13px;background:var(--paper);cursor:pointer;overflow:hidden;transition:.16s;text-align:center;padding-bottom:12px}
+  .btile:hover{border-color:#cdc6b7}
+  .btile.sel{border-color:var(--green);background:#f3f8f4}
+  .bimg{height:128px;background:#ece7dc;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-faint);font-size:11px;margin-bottom:10px}
+  .btile span{font-size:14px;font-weight:600;padding:0 8px;display:block;line-height:1.3}
+  .btile.sel span{color:var(--green)}
+  .graph{width:100%;height:128px;margin:6px 0 4px}
+  .ringwrap{display:flex;flex-direction:column;align-items:center;gap:18px;padding:24px 0}
+  .ring{transform:rotate(-90deg)}
+  .pct{font-family:var(--serif);font-size:42px;font-weight:800;color:var(--green)}
+  .calcq{color:var(--ink-soft);font-size:14px;text-align:center}
+  .modal{position:absolute;inset:0;background:rgba(20,20,15,.45);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:24px;z-index:40}
+  .sheet{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:26px 22px;max-width:380px;width:100%;text-align:center}
+  .sheet .row{display:flex;gap:10px;margin-top:18px}
+  .sheet .row .btn{margin:0}
+  .btn.alt{background:var(--paper);color:var(--ink-soft);border:1.5px solid var(--line)}
+  .btn.alt:hover{background:#f6f3ec}
+  .score-num{font-family:var(--serif);font-size:66px;font-weight:800;line-height:1;text-align:center}
+  .meter{height:11px;border-radius:99px;background:var(--grad);position:relative;margin:10px 2px 4px}
+  .marker{position:absolute;top:-7px;width:5px;height:25px;border-radius:4px;background:var(--ink);left:0;transform:translateX(-2px);transition:left 1s cubic-bezier(.4,0,.2,1);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+  .mscale{display:flex;justify-content:space-between;color:var(--ink-faint);font-size:11px;margin:0 2px}
+  .read{margin-top:18px;display:flex;flex-direction:column;gap:11px}
+  .rrow{display:flex;align-items:center;gap:12px;font-size:14px}
+  .rrow .lab{width:108px;color:var(--ink-soft);flex:0 0 auto}
+  .rbar{flex:1;height:8px;border-radius:99px;background:#e4ded2;overflow:hidden}
+  .rbar i{display:block;height:100%;width:0;border-radius:99px;transition:width .9s ease}
+  .rstat{width:54px;text-align:right;font-weight:600;font-size:12px;flex:0 0 auto}
+  .pill{display:inline-block;background:#f6e7e3;color:var(--red);border:1px solid #ecd5cf;padding:6px 12px;border-radius:99px;font-size:12px;font-weight:600;margin-top:16px}
+  .ba{display:flex;gap:9px;margin:4px 0 12px}
+  .ba .c{flex:1;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+  .ba .c .k{font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.07em}
+  .ba .c .v{font-family:var(--serif);font-weight:800;font-size:17px;margin-top:5px}
+  .ba .c .v.bad{color:var(--rust)} .ba .c .v.good{color:var(--green)}
+  .nopill{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:6px 0 16px}
+  .nopill span{font-size:12px;font-weight:600;color:var(--green);background:#eaf3ee;border:1px solid #d3e6da;border-radius:99px;padding:5px 11px}
+  .tier{border:1.5px solid var(--line);border-radius:13px;padding:15px;margin-bottom:11px;position:relative;background:var(--paper);cursor:pointer}
+  .tier.best{border-color:var(--green);box-shadow:0 0 0 3px rgba(10,54,34,.12)}
+  .tier.sel{border-color:var(--green);box-shadow:0 0 0 3px rgba(10,54,34,.16)}
+  .tier .tag{position:absolute;top:-10px;left:15px;background:var(--forest);color:var(--cream);font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:5px}
+  .tier .tt{display:flex;justify-content:space-between;align-items:baseline}
+  .tier .nm{font-family:var(--serif);font-weight:800;font-size:18px} .tier .pr{font-family:var(--serif);font-weight:800;font-size:19px}
+  .tier .sup{color:var(--ink-faint);font-size:12px;margin-top:3px}
+  .gtee{text-align:center;color:var(--ink-faint);font-size:12.5px;margin-top:8px}
+  .branch{color:var(--green);font-weight:600}
+  .flag{font-size:10px;color:var(--ink-faint);border:1px dashed #cdc6b7;border-radius:5px;padding:2px 6px;margin-left:6px;vertical-align:middle}
+  .cmp{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--paper);margin:6px 0 4px}
+  .cmp .row{display:grid;grid-template-columns:1fr 70px 70px;padding:12px 14px;border-bottom:1px solid var(--line);align-items:center;font-size:14.5px}
+  .cmp .row:last-child{border-bottom:0}
+  .cmp .row b{font-weight:600} .cmp .row span{text-align:right;font-weight:700}
+  .cmp .row .now{color:var(--red)} .cmp .row .aft{color:var(--green)}
+  .cmp .row.hd{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);background:#faf8f3}
+  .cmp .row.hd span{font-weight:600;color:var(--ink-faint)}
+  .statcall{background:#f4f3ef;border:1px dashed #d9d6cd;color:var(--ink-faint);border-radius:10px;padding:12px;font-size:12px;text-align:center;margin:14px 0}
+  .sech{font-family:var(--serif);font-weight:800;font-size:21px;text-align:center;margin:30px 0 12px}
+  .bullets{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:9px}
+  .bullets li{position:relative;padding-left:26px;font-size:14.5px;color:var(--ink-soft);line-height:1.5}
+  .bullets li:before{content:"✓";position:absolute;left:0;top:0;color:var(--green);font-weight:800}
+  .pay{text-align:center;color:var(--ink-faint);font-size:12px;margin-top:10px}
+  .rating{text-align:center;margin:26px 0}
+  .rating .stars{color:#c8a24a;font-size:22px;letter-spacing:2px}
+  .rating .rnum{font-size:12px;color:var(--ink-faint);margin-top:4px;border:1px dashed #cdc6b7;border-radius:5px;display:inline-block;padding:2px 8px}
+  .compounds{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .cc{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:13px}
+  .cc b{display:block;font-size:14px;margin-bottom:3px} .cc span{font-size:12.5px;color:var(--ink-faint);line-height:1.4}
+  .authority{display:flex;gap:10px;justify-content:center}
+  .authority span{flex:1;height:46px;background:#ece7dc;border:1px dashed #cdc6b7;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--ink-faint);font-size:10px}
+  .review{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:14px;margin-bottom:10px}
+  .review .rs{color:#c8a24a;font-size:13px;letter-spacing:1px}
+  .review p{font-size:14px;color:var(--ink-soft);margin:6px 0 8px;line-height:1.5}
+  .review .who{font-size:12px;color:var(--ink-faint)}
+  .gbox{border:1.5px solid var(--green);border-radius:13px;padding:18px;text-align:center;margin:24px 0}
+  .gbox b{font-family:var(--serif);font-weight:800;font-size:18px}
+  .gbox p{font-size:13.5px;color:var(--ink-soft);margin:8px 0 0;line-height:1.55}
+  .faq{margin-top:24px;border-top:1px solid var(--line)}
+  .faq details{border-bottom:1px solid var(--line)}
+  .faq summary{font-weight:600;font-size:15px;cursor:pointer;list-style:none;padding:14px 0;position:relative}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";position:absolute;right:2px;top:12px;color:var(--ink-faint);font-size:18px}
+  .faq details[open] summary::after{content:"–"}
+  .faq p{font-size:14px;color:var(--ink-soft);margin:0 0 14px;line-height:1.55}
+</style>
+<!-- Meta Pixel · Atlas -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','2272989850108695');fbq('track','PageView');
+</script>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="top">
+    <div class="brandrow">
+      <div class="brand">ATLAS<sup style="font-size:.5em;font-weight:600;vertical-align:.7em">™</sup></div>
+      <button class="back" id="back">‹ Back</button>
+    </div>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <div class="step" id="step"></div>
+  </div>
+  <div class="wrap"><div class="screen" id="screen"></div></div>
+</div>
+
+<script>
+const S = { i:0, a:{}, unit:'imperial', tier:'53757279469911' };
+
+// --- Tracking (drop your real IDs in before launch) ---
+function track(ev, params){ try{ if(typeof fbq==='function') fbq('track', ev, params||{}); }catch(e){} }
+function submitLead(email){
+  if(!email) return;
+  track('Lead');
+  // TODO: confirm Atlas's email tool, then POST the lead so the abandoned-quiz / nurture flow fires.
+  // Klaviyo client example (needs Atlas public company ID + a list ID):
+  // fetch('https://a.klaviyo.com/client/subscriptions/?company_id=PUBLIC_ID',{method:'POST',headers:{'Content-Type':'application/json','revision':'2024-10-15'},body:JSON.stringify({data:{type:'subscription',attributes:{profile:{data:{type:'profile',attributes:{email}}}},relationships:{list:{data:{type:'list',id:'LIST_ID'}}}}})});
+}
+
+const SCREENS = [
+ {type:'cover'},
+ {type:'intro'},
+ {type:'celebrate'},
+ {type:'single', key:'energy', q:'Do you hit a wall most afternoons, running on caffeine and willpower by 2pm?', opts:['Yes, most days','Sometimes','No'], bad:['Yes, most days']},
+ {type:'card', variant:'seedA'},
+ {type:'bodytype'},
+ {type:'card', variant:'seedB'},
+ {type:'slider', key:'focus', q:'How sharp is your mental focus compared to five years ago?', sub:'Concentration, memory, staying on task.', lo:'Foggy', hi:'Razor sharp'},
+ {type:'single', key:'mood', q:'Shorter fuse or flatter moods than you used to have?', opts:['Yes','A bit','No'], bad:['Yes']},
+ {type:'single', key:'drive', q:'Your drive, the edge to chase, build and compete, is…', opts:['Still firing','Flickering','Mostly gone','I can barely remember it'], bad:['Flickering','Mostly gone','I can barely remember it']},
+ {type:'card', variant:'warn'},
+ {type:'single', key:'libido', q:'How’s your sex drive these days?', opts:['Strong','Up and down','Low','Gone'], bad:['Up and down','Low','Gone']},
+ {type:'single', key:'morning', q:'How often do you wake up with morning wood?', opts:['Most mornings','Sometimes','Rarely','Can’t remember the last time'], bad:['Sometimes','Rarely','Can’t remember the last time']},
+ {type:'card', variant:'research'},
+ {type:'card', variant:'fixable'},
+ {type:'calc'},
+ {type:'profile'},
+ {type:'email'},
+ {type:'results'},
+ {type:'offer'}
+];
+
+const screen = document.getElementById('screen');
+const fill = document.getElementById('fill');
+const stepEl = document.getElementById('step');
+const backBtn = document.getElementById('back');
+const QSET = ['intro','single','multi','slider','bodytype'];
+
+function totalQ(){ return SCREENS.filter(s=>QSET.includes(s.type)).length; }
+function qIndex(){ return SCREENS.slice(0,S.i+1).filter(s=>QSET.includes(s.type)).length; }
+function progress(){
+  const cur=SCREENS[S.i];
+  if(cur.type==='cover'){ fill.style.width='0'; stepEl.textContent=''; return; }
+  if(['profile','email','results','offer','calc','celebrate'].includes(cur.type)){ fill.style.width='100%'; stepEl.textContent=''; return; }
+  const n=qIndex(), t=totalQ(); fill.style.width=Math.round(n/t*100)+'%'; stepEl.textContent=`Question ${n} of ${t}`;
+}
+function signsCount(){
+  let s=0; const a=S.a;
+  SCREENS.forEach(sc=>{ if(sc.bad && a[sc.key] && sc.bad.includes(a[sc.key])) s++; });
+  if(a.bodyScore) s+=a.bodyScore;
+  if(a.focus!=null && a.focus<=5) s++;
+  if(a.age && a.age!=='18-30') s++;
+  return Math.min(10,s);
+}
+function vitality(){ return Math.max(10,92-signsCount()*8); }
+function verdict(){ const s=signsCount();
+  if(s>=8) return 'Your answers point to strongly low testosterone.';
+  if(s>=5) return 'Your answers point to low testosterone.';
+  if(s>=3) return 'You’re showing early signs of low testosterone.';
+  return 'You’re showing a few early signs of low testosterone.';
+}
+function go(n){ S.i=Math.min(SCREENS.length-1,S.i+n); render(); }
+function render(){
+  const sc=SCREENS[S.i];
+  backBtn.style.visibility = S.i>0 && !['profile','results','offer','calc'].includes(sc.type)?'visible':'hidden';
+  screen.classList.remove('in'); screen.innerHTML=build(sc); progress();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ screen.classList.add('in'); after(sc); }));
+  window.scrollTo(0,0);
+}
+function build(sc){
+  switch(sc.type){
+    case 'cover': return `
+      <div class="eyebrow">Low Testosterone Check</div>
+      <h1>Do you have the signs of low testosterone?</h1>
+      <p class="sub">Most men have a few and write it off as age. Take the check, see how many of the 10 signs you’re showing, and get a plan to reverse them.</p>
+      <img class="heroimg" src="img/hero.png" alt="">
+      <button class="btn" id="cont">Start the check →</button>
+      <div class="micro">8 quick questions · about 90 seconds · no email to start</div>`;
+    case 'intro': return `
+      <h1>First, how old are you?</h1>
+      <p class="sub">Testosterone naturally shifts with age, so we factor it into your score.</p>
+      <div class="tiles">${['18-30','30-39','40-49','50-59','60+'].map(a=>`<div class="tile" data-age="${a}">${a}<small>years</small></div>`).join('')}</div>`;
+    case 'celebrate': return `<div class="card"><div class="icon ok">✓</div><h2>First step done.</h2><p>You just did what most men never will: actually checked. Let’s see how far it’s gone.</p></div><button class="btn" id="cont">Continue</button>`;
+    case 'single': return `<h1>${sc.q}</h1>${sc.sub?`<p class="sub">${sc.sub}</p>`:''}<div class="opts">${sc.opts.map(o=>`<div class="opt" data-v="${o}">${o}<span class="tick"></span></div>`).join('')}</div>`;
+    case 'multi': return `<h1>${sc.q}</h1>${sc.sub?`<p class="sub">${sc.sub}</p>`:''}<div class="opts">${sc.opts.map(o=>`<div class="opt" data-v="${o}">${o}<span class="tick"></span></div>`).join('')}</div><button class="btn" id="cont">Continue</button>`;
+    case 'bodytype': {
+      const t=[{l:'Lean and flat',sc:0},{l:'A bit soft up front',sc:1},{l:'A real gut now',sc:2},{l:'Belly’s the first thing you see',sc:3}];
+      return `<h1>Which is closest to your stomach right now?</h1>
+        <p class="sub">Be honest. The belly is the first place low testosterone shows up.</p>
+        <div class="btiles">${t.map(x=>`<div class="btile" data-v="${x.l}" data-sc="${x.sc}"><div class="bimg"><img src="img/body${x.sc}.png" alt=""></div><span>${x.l}</span></div>`).join('')}</div>`;
+    }
+    case 'slider': return `<h1>${sc.q}</h1>${sc.sub?`<p class="sub">${sc.sub}</p>`:''}<div class="slval" id="sv">5</div><input type="range" min="1" max="10" value="5" id="rng"><div class="slabel"><span>${sc.lo}</span><span>${sc.hi}</span></div><button class="btn" id="cont">Continue</button>`;
+    case 'hw': {
+      const m=S.unit==='metric';
+      return `<h1>Last bit. Let’s calculate your baseline.</h1>
+        <p class="sub">We use this to read your results accurately.</p>
+        <div class="seg" id="useg"><button class="${!m?'on':''}" data-u="imperial">ft · lbs</button><button class="${m?'on':''}" data-u="metric">cm · kg</button></div>
+        ${m?`<div class="field"><input class="inp" id="cm" inputmode="numeric" placeholder="Height (cm)"></div><div class="field"><input class="inp" id="kg" inputmode="numeric" placeholder="Weight (kg)"></div>`
+           :`<div class="field"><input class="inp" id="ft" inputmode="numeric" placeholder="Height (ft)"><input class="inp" id="in" inputmode="numeric" placeholder="in"></div><div class="field"><input class="inp" id="wt" inputmode="numeric" placeholder="Weight (lbs)"></div>`}
+        <button class="btn" id="cont">Continue</button>`;
+    }
+    case 'comp': {
+      const under=(S.a.heightIn||72)<70;
+      return `<div class="eyebrow">Your composition readout</div><h2>Here’s where your body’s sitting.</h2>
+        <p class="sub">Based on your height and weight, and where testosterone is pushing it.</p>
+        ${under?`<div class="card warn"><p style="color:var(--ink);font-family:var(--serif);font-size:18px">Real talk.</p><p>At your height you were never built to coast. The men your size who still command a room run on energy, drive, build and presence, and every one of those is set by your testosterone. It’s the one lever you can still pull, and most men your height never reach for it.</p></div>`
+        :`<div class="card"><p>Your testosterone sets how you store fat, hold muscle and carry yourself. Right now it’s working against you. The good news: that part is fixable.</p></div>`}
+        <button class="btn" id="cont">Continue</button>`;
+    }
+    case 'card': return cardVariant(sc.variant);
+    case 'calc': return `<div class="ringwrap">
+        <svg class="ring" width="148" height="148" viewBox="0 0 148 148">
+          <circle cx="74" cy="74" r="63" fill="none" stroke="#e4ded2" stroke-width="11"/>
+          <circle id="rc" cx="74" cy="74" r="63" fill="none" stroke="#0a3622" stroke-width="11" stroke-linecap="round" stroke-dasharray="396" stroke-dashoffset="396"/>
+        </svg><div class="pct" id="pct">0%</div><div class="calcq">Scoring your answers against the 10 signs…</div></div>`;
+    case 'profile': {
+      const s=signsCount(), v=vitality();
+      const col=v<40?'var(--red)':v<65?'var(--amber)':'var(--green)';
+      const rows=[['Energy',S.a.energy==='No'?70:30],['Drive',S.a.drive==='Still firing'?72:26],['Focus',(S.a.focus||5)*10],['Composition',S.a.bodyScore>=2?26:S.a.bodyScore===1?46:64],['Confidence',s>5?24:58]];
+      return `<div class="eyebrow" style="text-align:center">Your results</div><h2 style="text-align:center">${verdict()}</h2>
+        <div class="score-num" id="sn" style="color:${col}">--</div>
+        <div class="meter"><div class="marker" id="mk"></div></div>
+        <div class="mscale"><span>Depleted</span><span>Optimal</span></div>
+        <p style="text-align:center;margin:16px 0 0;font-size:15px">You’re showing <b>${s} of the 10 signs</b> of testosterone decline.</p>
+        <div class="read">${rows.map(r=>{const c=r[1]<45?'var(--red)':r[1]<65?'var(--amber)':'var(--green)';return `<div class="rrow"><span class="lab">${r[0]}</span><span class="rbar"><i data-w="${r[1]}" style="background:${c}"></i></span><span class="rstat" style="color:${c}">${r[1]<45?'Low':r[1]<65?'Fair':'Good'}</span></div>`;}).join('')}</div>
+        <div style="text-align:center"><div class="pill">A self-check based on your answers, not a medical diagnosis</div></div>
+        <button class="btn" id="cont" data-v="${v}">See what this means →</button>`;
+    }
+    case 'email': return `<h1>Where should we send your Vitality Score and plan?</h1><p class="sub">Your answers are private. We’ll build your plan on the next screen.</p><div class="field"><input class="inp" id="em" type="email" placeholder="you@email.com"></div><button class="btn" id="cont">Build my plan</button><button class="btn alt" id="skip" style="margin-top:10px">Skip, just show my plan</button><div class="micro">No spam. Unsubscribe anytime.</div>`;
+    case 'results': return `<div class="eyebrow">Plan ready</div><h1>Your 90-day plan to get your edge back is ready.</h1>
+      <svg class="graph" viewBox="0 0 300 120" preserveAspectRatio="none"><polyline fill="none" stroke="#0a3622" stroke-width="4" stroke-linecap="round" points="6,104 150,86 300,18"/><text x="6" y="118" fill="#8d887c" font-size="11">Today</text><text x="252" y="118" fill="#8d887c" font-size="11">Week 12</text></svg>
+      <button class="btn" id="cont">See my plan</button>`;
+    case 'offer': {
+      const s=signsCount();
+      const tiers=`
+        <div class="tier" data-variant="53757279437143"><div class="tt"><span class="nm">1 Bottle</span><span class="pr">$49</span></div><div class="sup">1 month · $49/bottle · $1.63/day</div></div>
+        <div class="tier best" data-variant="53757279469911"><span class="tag">Most popular · buy 2, get 1 free</span>
+          <div class="tt"><span class="nm">3 Bottles</span><span class="pr">$98</span></div>
+          <div class="sup">3 months · $32.67/bottle · The Rebuild Blueprint free</div></div>
+        <div class="tier" data-variant="53757279502679"><div class="tt"><span class="nm">6 Bottles</span><span class="pr">$147</span></div><div class="sup">6 months · $24.50/bottle · best value</div></div>
+        <button class="btn cta-go">Start my plan →</button>
+        <div class="gtee">90 days to feel it, or every penny back · free US shipping on 3+</div>`;
+      return `
+        <div class="eyebrow" style="text-align:center">Your results</div>
+        <h2 style="text-align:center;margin-bottom:6px">${verdict()}</h2>
+        <p class="sub" style="text-align:center">You reported ${s} of the 10 signs. Here’s what that means, and how to turn it around.</p>
+        <div class="cmp">
+          <div class="row hd"><b></b><span>Now</span><span>90 days</span></div>
+          <div class="row"><b>Energy</b><span class="now">Low</span><span class="aft">High</span></div>
+          <div class="row"><b>Drive</b><span class="now">Faded</span><span class="aft">Firing</span></div>
+          <div class="row"><b>Focus</b><span class="now">Foggy</span><span class="aft">Sharp</span></div>
+          <div class="row"><b>Belly</b><span class="now">Rising</span><span class="aft">Falling</span></div>
+          <div class="row"><b>Confidence</b><span class="now">Low</span><span class="aft">Back</span></div>
+        </div>
+        <h3 class="sech">Here’s your personalized plan</h3>
+        <svg class="graph" viewBox="0 0 300 120" preserveAspectRatio="none"><polyline fill="none" stroke="#0a3622" stroke-width="4" stroke-linecap="round" points="6,104 150,84 300,16"/><text x="6" y="118" fill="#8d887c" font-size="11">Today</text><text x="250" y="118" fill="#8d887c" font-size="11">Week 12</text></svg>
+        <ul class="bullets">
+          <li>One Atlas capsule a day, the engine that puts back what your body’s run short on</li>
+          <li>A simple daily routine to amplify it (sleep, light training, food)</li>
+          <li>Week-by-week expectations, so you know what should shift and when</li>
+          <li>The Rebuild Blueprint, the full step-by-step, free with your plan</li>
+        </ul>
+        <div class="nopill"><span>No needles</span><span>No prescription</span><span>No TRT</span></div>
+        <h3 class="sech">Choose your plan</h3>
+        ${tiers}
+        <div class="pay">Visa · Mastercard · Amex · PayPal</div>
+        <h3 class="sech">What’s in it</h3>
+        <div class="compounds">
+          <div class="cc"><b>Tongkat Ali</b><span>Drive, libido and natural testosterone</span></div>
+          <div class="cc"><b>Shilajit</b><span>Raw energy and stamina</span></div>
+          <div class="cc"><b>Ashwagandha</b><span>Lowers the cortisol that drags T down</span></div>
+          <div class="cc"><b>Sea Moss</b><span>The mineral foundation</span></div>
+        </div>
+        <img class="heroimg" src="img/hero.png" alt="" style="margin-top:8px;height:210px">
+        <h3 class="sech">Get your plan</h3>
+        ${tiers}
+        <div class="gbox"><b>90-Day Money-Back Guarantee</b><p>Take it every day for 90 days. If you don’t feel the difference, every penny back. No half-empty-bottle clause, no hoops.</p></div>
+        <div class="faq">
+          <details open><summary>Is this TRT or hormones?</summary><p>No. No prescription, no synthetic hormones, no needles. Atlas supports your body’s own testosterone production.</p></details>
+          <details><summary>How fast will I feel it?</summary><p>Most men notice energy first, often within the first few weeks. Drive and recovery build over the following month. Give it the full 90 days.</p></details>
+          <details><summary>What if it doesn’t work for me?</summary><p>You’ve got 90 days to feel it, or your money back.</p></details>
+          <details><summary>How do I take it?</summary><p>One capsule a day, with or without food. That’s it.</p></details>
+        </div>`;
+    }
+  }
+}
+function cardVariant(v){
+  if(v==='seedA') return `<div class="eyebrow">Why this happens</div>
+    <h2>After 30, your testosterone drops about 1% every year.</h2>
+    <svg class="graph" viewBox="0 0 300 120" preserveAspectRatio="none"><polyline fill="none" stroke="#bc3b2e" stroke-width="3" points="6,26 150,64 294,98"/><text x="6" y="16" fill="#8d887c" font-size="11">Age 30</text><text x="250" y="114" fill="#8d887c" font-size="11">Now</text></svg>
+    <p class="sub" style="margin-top:6px">It doesn’t crash, it slips, a little every year. By your 40s a chunk of your drive, energy and edge is simply gone, which is why the man in the mirror slowly stops matching the one in your head.</p>
+    <button class="btn" id="cont">Continue</button>`;
+  if(v==='seedB') return `<div class="eyebrow">Why the belly won’t budge</div>
+    <h2>Testosterone decides where your body stores fat.</h2>
+    <div class="card"><p>When it drops, your body parks fat around your middle and clings to it. That’s why the diet and training that used to work stop working. You can’t out-train a hormone that’s telling your body to hold on.</p></div>
+    <button class="btn" id="cont">Continue</button>`;
+  if(v==='warn') return `<div class="eyebrow">What it’s costing you</div>
+    <div class="card warn"><div class="icon warn">!</div><h2>Low testosterone doesn’t sit still. It compounds.</h2><p>Left alone, it keeps dropping year after year, and the gap widens: less muscle, less drive, lower mood, weaker performance. The men pulling ahead at work, in the gym and in the bedroom aren’t lucky. They’re running on a full tank while most men run on empty and call it ageing.</p><div class="slidein" style="overflow:hidden;border:0;background:none;padding:0"><img src="img/hero.png" alt=""></div></div>
+    <button class="btn" id="cont">Continue</button>`;
+  if(v==='research') return `<div class="eyebrow">The science</div>
+    <h2>Four natural compounds have the most research behind them.</h2>
+    <p class="sub">For supporting the body’s own testosterone: tongkat ali, shilajit, ashwagandha and sea moss. Each earns its place for a reason, not for the label.</p>
+    <button class="btn" id="cont">Continue</button>`;
+  if(v==='fixable') return `<div class="eyebrow">The good news</div>
+    <h2>Your body hasn’t stopped. It’s under-supplied.</h2>
+    <div class="card"><p>It still knows how to make testosterone. It’s just running short on the raw materials the job needs. Put those back, consistently, and the system can pick back up, no needle, no prescription.</p></div>
+    <button class="btn" id="cont">See my results</button>`;
+}
+function after(sc){
+  screen.querySelectorAll('.tile').forEach(t=>t.onclick=()=>{ S.a.age=t.dataset.age; t.style.borderColor='var(--green)'; t.style.background='#f3f8f4'; setTimeout(()=>go(1),250); });
+  if(sc.type==='single'){ screen.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{ screen.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel')); o.classList.add('sel'); S.a[sc.key]=o.dataset.v; setTimeout(()=>go(1),270); }); }
+  if(sc.type==='bodytype'){ screen.querySelectorAll('.btile').forEach(o=>o.onclick=()=>{ screen.querySelectorAll('.btile').forEach(x=>x.classList.remove('sel')); o.classList.add('sel'); S.a.bodytype=o.dataset.v; S.a.bodyScore=+o.dataset.sc; setTimeout(()=>go(1),300); }); }
+  if(sc.type==='multi'){ const sel=new Set(); screen.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{ o.classList.toggle('sel'); o.classList.contains('sel')?sel.add(o.dataset.v):sel.delete(o.dataset.v); }); cont(()=>{ S.a[sc.key]=[...sel]; go(1); }); }
+  if(sc.type==='slider'){ const r=screen.querySelector('#rng'),sv=screen.querySelector('#sv'); r.oninput=()=>sv.textContent=r.value; cont(()=>{ S.a[sc.key]=+r.value; go(1); }); }
+  if(sc.type==='hw'){
+    screen.querySelectorAll('#useg button').forEach(b=>b.onclick=()=>{ S.unit=b.dataset.u; render(); });
+    cont(()=>{ if(S.unit==='metric'){ const cm=+(screen.querySelector('#cm').value||178); S.a.heightIn=cm/2.54; S.a.weight=+(screen.querySelector('#kg').value||0);} else { const ft=+(screen.querySelector('#ft').value||5),inch=+(screen.querySelector('#in').value||9); S.a.heightIn=ft*12+inch; S.a.weight=+(screen.querySelector('#wt').value||0);} go(1); });
+  }
+  if(['comp','card','celebrate','results'].includes(sc.type)) cont(()=>go(1));
+  if(sc.type==='cover') cont(()=>{ track('ViewContent',{content_name:'quiz_start'}); go(1); });
+  if(sc.type==='results') track('ViewContent',{content_name:'quiz_results'});
+  if(sc.type==='email'){ cont(()=>{ S.a.email=screen.querySelector('#em').value; submitLead(S.a.email); go(1); }); const sk=screen.querySelector('#skip'); if(sk) sk.onclick=()=>go(1); }
+  if(sc.type==='offer'){
+    screen.querySelectorAll('.tier').forEach(t=>{ t.classList.toggle('sel',t.dataset.variant===S.tier); t.onclick=()=>{ S.tier=t.dataset.variant; screen.querySelectorAll('.tier').forEach(x=>x.classList.toggle('sel',x.dataset.variant===S.tier)); }; });
+    screen.querySelectorAll('.cta-go').forEach(b=>b.onclick=()=>{ track('InitiateCheckout'); location.href='https://tryatlasnutrition.com/cart/'+S.tier+':1'; });
+  }
+  if(sc.type==='profile'){ const v=+screen.querySelector('#cont').dataset.v; countUp(screen.querySelector('#sn'),v); setTimeout(()=>screen.querySelector('#mk').style.left=v+'%',350); setTimeout(()=>screen.querySelectorAll('.rbar i').forEach(i=>i.style.width=i.dataset.w+'%'),450); cont(()=>go(1)); }
+  if(sc.type==='calc') runCalc();
+}
+function cont(fn){ const b=screen.querySelector('#cont'); if(b) b.onclick=fn; }
+function countUp(el,to){ let n=0; const step=Math.max(1,Math.round(to/26)); const id=setInterval(()=>{ n+=step; if(n>=to){n=to;clearInterval(id);} el.textContent=n; },26); }
+function runCalc(){
+  const rc=screen.querySelector('#rc'),pct=screen.querySelector('#pct'); let p=0,paused=false; const C=396;
+  const id=setInterval(()=>{ if(paused)return; p+=2; if(p>100)p=100; rc.style.strokeDashoffset=C-(C*p/100); pct.textContent=p+'%';
+    if(p===54){ paused=true; showCalcModal(()=>paused=false); } if(p>=100){ clearInterval(id); setTimeout(()=>go(1),500); } },45);
+}
+function showCalcModal(resume){
+  const m=document.createElement('div'); m.className='modal';
+  m.innerHTML=`<div class="sheet"><h2>One thing first.</h2><p style="color:var(--ink-soft);font-size:15px;margin:8px 0 0">Do you actually want to feel like yourself again?</p><div class="row"><button class="btn alt" id="no">Not really</button><button class="btn" id="yes">Yes</button></div></div>`;
+  document.getElementById('app').appendChild(m);
+  m.querySelector('#yes').onclick=()=>{ m.remove(); resume(); };
+  m.querySelector('#no').onclick=()=>{ m.remove(); resume(); };
+}
+backBtn.onclick=()=>{ if(S.i>0){ S.i--; render(); } };
+(function deeplink(){
+  const j=new URLSearchParams(location.search).get('screen'); if(!j) return;
+  Object.assign(S.a,{age:'40-49',energy:'Yes, most days',bodyScore:3,focus:3,mood:'Yes',drive:'Mostly gone',libido:'Low',morning:'Rarely'});
+  const map={report:'profile',score:'profile'}; const t=map[j]||j;
+  const i=SCREENS.findIndex(s=>(s.type===t)||(s.variant===t)); if(i>=0) S.i=i;
+})();
+render();
+</script>
+</body>
+</html>
