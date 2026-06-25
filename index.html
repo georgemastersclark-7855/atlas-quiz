@@ -180,7 +180,7 @@ fbq('init','2272989850108695');fbq('track','PageView');
 </head>
 <body>
 <div class="stage">
-<aside class="brandpane" style="background-image:url(img/hero.png)">
+<aside class="brandpane" style="background-image:url(img/hero.jpg)">
   <div class="bp">
     <div class="bp-logo">ATLAS™</div>
     <div class="bp-head">Do you have the signs of low testosterone?</div>
@@ -280,7 +280,7 @@ function build(sc){
       <div class="eyebrow">Low Testosterone Check</div>
       <h1>Do you have the signs of low testosterone?</h1>
       <p class="sub">Most men have a few and write it off as age. Take the check, see how many of the 10 signs you’re showing, and get a plan to reverse them.</p>
-      <img class="heroimg cover-hero" src="img/hero.png" alt="">
+      <img class="heroimg cover-hero" src="img/hero.jpg" alt="">
       <button class="btn" id="cont">Start the check →</button>
       <div class="micro">8 quick questions · about 90 seconds · no email to start</div>`;
     case 'intro': return `
@@ -294,7 +294,7 @@ function build(sc){
       const t=[{l:'Lean and flat',sc:0},{l:'A bit soft up front',sc:1},{l:'A real gut now',sc:2},{l:'Belly’s the first thing you see',sc:3}];
       return `<h1>Which is closest to your stomach right now?</h1>
         <p class="sub">Be honest. The belly is the first place low testosterone shows up.</p>
-        <div class="btiles">${t.map(x=>`<div class="btile" data-v="${x.l}" data-sc="${x.sc}"><div class="bimg"><img src="img/body${x.sc}.png" alt=""></div><span>${x.l}</span></div>`).join('')}</div>`;
+        <div class="btiles">${t.map(x=>`<div class="btile" data-v="${x.l}" data-sc="${x.sc}"><div class="bimg"><img src="img/body${x.sc}.jpg" alt=""></div><span>${x.l}</span></div>`).join('')}</div>`;
     }
     case 'slider': return `<h1>${sc.q}</h1>${sc.sub?`<p class="sub">${sc.sub}</p>`:''}<div class="slval" id="sv">5</div><input type="range" min="1" max="10" value="5" id="rng"><div class="slabel"><span>${sc.lo}</span><span>${sc.hi}</span></div><button class="btn" id="cont">Continue</button>`;
     case 'hw': {
@@ -378,7 +378,7 @@ function build(sc){
           <div class="cc"><b>Ashwagandha</b><span>Lowers the cortisol that drags T down</span></div>
           <div class="cc"><b>Sea Moss</b><span>The mineral foundation</span></div>
         </div>
-        <img class="heroimg" src="img/hero.png" alt="" style="margin-top:8px;height:210px">
+        <img class="heroimg" src="img/hero.jpg" alt="" style="margin-top:8px;height:210px">
         <h3 class="sech">Get your plan</h3>
         ${tiers}
         <div class="gbox"><b>90-Day Money-Back Guarantee</b><p>Take it every day for 90 days. If you don’t feel the difference, every penny back. No half-empty-bottle clause, no hoops.</p></div>
