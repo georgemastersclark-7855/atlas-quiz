@@ -167,6 +167,44 @@
   }
   @media(min-width:1280px){ .app{flex:0 0 600px;width:600px} }
   @media(min-width:900px){ .cover-hero{display:none} }
+  .sesub{text-align:center;color:var(--ink-soft);font-size:13.5px;margin:6px 0 14px}
+  .pintro{background:var(--green-d);border-radius:18px;overflow:hidden;margin:6px 0 4px;color:var(--cream)}
+  .pintro img{width:100%;display:block}
+  .pi{padding:22px 20px 24px}
+  .pi-ev{color:rgba(242,242,240,.62);font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+  .pi-name{font-weight:800;font-size:25px;color:var(--cream);margin-top:7px;letter-spacing:.01em}
+  .pi-ing{font-size:12px;color:rgba(242,242,240,.7);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+  .pi-p{font-size:14.5px;color:rgba(242,242,240,.86);line-height:1.55;margin:13px 0 0}
+  .piticks{list-style:none;margin:15px 0 0;display:flex;flex-direction:column;gap:9px}
+  .piticks li{position:relative;padding-left:24px;font-size:13.5px;color:var(--cream)}
+  .piticks li:before{content:"✓";position:absolute;left:0;color:#9ccbb0;font-weight:800}
+  .ingt{border:1px solid var(--line);border-radius:13px;background:var(--paper);overflow:hidden;margin-top:2px}
+  .ingt .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .ingt .r:last-child{border-bottom:0}
+  .ingt .inm{font-weight:700;font-size:14.5px}
+  .ingt .ids{font-size:12.5px;color:var(--ink-faint);margin-top:2px}
+  .ingt .dose{font-family:var(--serif);font-weight:800;font-size:17px;color:var(--green);flex:0 0 auto}
+  .ingt .tot{display:flex;justify-content:space-between;padding:13px 16px;background:#f3f8f4;font-weight:700;font-size:13.5px}
+  .stats{display:flex;gap:8px;margin-top:4px}
+  .stats .s{flex:1;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 6px;text-align:center}
+  .stats .v{font-family:var(--serif);font-weight:800;font-size:23px;color:var(--green)}
+  .stats .k{font-size:10px;color:var(--ink-faint);line-height:1.3;margin-top:5px}
+  .statnote{text-align:center;font-size:11px;color:var(--ink-faint);margin-top:8px}
+  .ph{font-size:11px;color:var(--ink-faint);border:1px dashed #cdc6b7;border-radius:6px;padding:8px 10px;text-align:center;margin-top:10px;background:#faf8f3}
+  .qsel-h{font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin:4px 0 12px}
+  .qcards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .qcard{position:relative;background:var(--paper);border:1.5px solid var(--line);border-radius:13px;padding:12px 7px 13px;text-align:center;cursor:pointer;transition:.15s}
+  .qcard.sel{border-color:var(--green);background:#f3f8f4;box-shadow:0 0 0 3px rgba(10,54,34,.12)}
+  .qcard img{width:84%;aspect-ratio:1/1;object-fit:cover;border-radius:9px;display:block;margin:0 auto 8px;background:#f1efea}
+  .qcard .qn{font-weight:700;font-size:13.5px}
+  .qcard .qs{font-size:10.5px;color:var(--ink-faint);margin-top:2px}
+  .qcard .qd{font-size:10px;font-weight:700;color:var(--green);margin-top:4px;line-height:1.2}
+  .qbadge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);white-space:nowrap;background:var(--green);color:var(--cream);font-weight:700;font-size:9px;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:999px}
+  .qprice{display:flex;align-items:center;gap:10px;margin:16px 2px 0}
+  .qprice .pnow{font-family:var(--serif);font-weight:800;font-size:26px;color:var(--ink)}
+  .qprice .pwas{color:var(--ink-faint);font-size:14px;text-decoration:line-through}
+  .qprice .psave{margin-left:auto;font-weight:700;font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--green);background:#eaf3ee;border:1px solid #d3e6da;border-radius:999px;padding:5px 11px}
+  .foot{font-size:10.5px;color:var(--ink-faint);line-height:1.5;margin-top:24px;text-align:center}
 </style>
 <!-- Meta Pixel · Atlas -->
 <script>
@@ -338,19 +376,16 @@ function build(sc){
       <svg class="graph" viewBox="0 0 300 120" preserveAspectRatio="none"><polyline fill="none" stroke="#0a3622" stroke-width="4" stroke-linecap="round" points="6,104 150,86 300,18"/><text x="6" y="118" fill="#8d887c" font-size="11">Today</text><text x="252" y="118" fill="#8d887c" font-size="11">Week 12</text></svg>
       <button class="btn" id="cont">See my plan</button>`;
     case 'offer': {
-      const s=signsCount();
-      const tiers=`
-        <div class="tier" data-variant="53757279437143"><div class="tt"><span class="nm">1 Bottle</span><span class="pr">$49</span></div><div class="sup">1 month · $49/bottle · $1.63/day</div></div>
-        <div class="tier best" data-variant="53757279469911"><span class="tag">Most popular · buy 2, get 1 free</span>
-          <div class="tt"><span class="nm">3 Bottles</span><span class="pr">$98</span></div>
-          <div class="sup">3 months · $32.67/bottle · The Rebuild Blueprint free</div></div>
-        <div class="tier" data-variant="53757279502679"><div class="tt"><span class="nm">6 Bottles</span><span class="pr">$147</span></div><div class="sup">6 months · $24.50/bottle · best value</div></div>
-        <button class="btn cta-go">Start my plan →</button>
-        <div class="gtee">90 days to feel it, or every penny back · free US shipping on 3+</div>`;
+      const s=signsCount(), v=vitality();
       return `
         <div class="eyebrow" style="text-align:center">Your results</div>
-        <h2 style="text-align:center;margin-bottom:6px">${verdict()}</h2>
-        <p class="sub" style="text-align:center">You reported ${s} of the 10 signs. Here’s what that means, and how to turn it around.</p>
+        <h2 style="text-align:center">${verdict()}</h2>
+        <div class="score-num" style="color:var(--red)">${v}</div>
+        <div class="meter"><div class="marker" style="left:${v}%"></div></div>
+        <div class="mscale"><span>Depleted</span><span>Optimal</span></div>
+        <p style="text-align:center;margin:14px 0 0;font-size:15px">You’re showing <b>${s} of the 10 signs</b> of testosterone decline.</p>
+
+        <h3 class="sech">Where you could be in 90 days</h3>
         <div class="cmp">
           <div class="row hd"><b></b><span>Now</span><span>90 days</span></div>
           <div class="row"><b>Energy</b><span class="now">Low</span><span class="aft">High</span></div>
@@ -359,35 +394,74 @@ function build(sc){
           <div class="row"><b>Belly</b><span class="now">Rising</span><span class="aft">Falling</span></div>
           <div class="row"><b>Confidence</b><span class="now">Low</span><span class="aft">Back</span></div>
         </div>
-        <h3 class="sech">Here’s your personalized plan</h3>
-        <svg class="graph" viewBox="0 0 300 120" preserveAspectRatio="none"><polyline fill="none" stroke="#0a3622" stroke-width="4" stroke-linecap="round" points="6,104 150,84 300,16"/><text x="6" y="118" fill="#8d887c" font-size="11">Today</text><text x="250" y="118" fill="#8d887c" font-size="11">Week 12</text></svg>
+
+        <div class="eyebrow" style="text-align:center;margin-top:34px">The fix</div>
+        <h3 class="sech" style="margin-top:4px">Meet Atlas</h3>
+        <p class="sesub">The natural testosterone support built to reverse exactly what your answers flagged.</p>
+        <div class="pintro">
+          <img src="img/bottle-single.jpg" alt="Atlas Natural Testosterone Support bottle">
+          <div class="pi">
+            <div class="pi-ev">One capsule a day</div>
+            <div class="pi-name">Natural Testosterone Support</div>
+            <div class="pi-ing">Shilajit · Tongkat Ali · Ashwagandha · Sea Moss</div>
+            <p class="pi-p">Low testosterone isn’t a willpower problem, it’s a supply problem. Atlas puts back the four raw materials your body needs to make its own testosterone, so the system can pick back up.</p>
+            <ul class="piticks">
+              <li>Supports healthy testosterone, drive, energy and libido&dagger;</li>
+              <li>700mg of disclosed botanical extracts per capsule</li>
+              <li>Hormone-free. No needles. No prescription. No TRT.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="sech">What’s in every capsule</h3>
+        <p class="sesub">Four compounds, properly dosed, every dose on the label.</p>
+        <div class="ingt">
+          <div class="r"><div><div class="inm">Shilajit extract</div><div class="ids">Raw energy &amp; vitality</div></div><div class="dose">400mg</div></div>
+          <div class="r"><div><div class="inm">Tongkat Ali extract</div><div class="ids">Drive, libido &amp; natural testosterone</div></div><div class="dose">100mg</div></div>
+          <div class="r"><div><div class="inm">Ashwagandha extract</div><div class="ids">Lowers the cortisol that drags T down</div></div><div class="dose">100mg</div></div>
+          <div class="r"><div><div class="inm">Sea Moss extract</div><div class="ids">The daily mineral foundation</div></div><div class="dose">100mg</div></div>
+          <div class="tot"><span>Active botanical extracts</span><span>700mg</span></div>
+        </div>
+
+        <h3 class="sech">Your 90-day plan</h3>
         <ul class="bullets">
           <li>One Atlas capsule a day, the engine that puts back what your body’s run short on</li>
-          <li>A simple daily routine to amplify it (sleep, light training, food)</li>
+          <li>A simple daily routine to amplify it: sleep, light training, food</li>
           <li>Week-by-week expectations, so you know what should shift and when</li>
           <li>The Rebuild Blueprint, the full step-by-step, free with your plan</li>
         </ul>
-        <div class="nopill"><span>No needles</span><span>No prescription</span><span>No TRT</span></div>
-        <h3 class="sech">Choose your plan</h3>
-        ${tiers}
-        <div class="pay">Visa · Mastercard · Amex · PayPal</div>
-        <h3 class="sech">What’s in it</h3>
-        <div class="compounds">
-          <div class="cc"><b>Tongkat Ali</b><span>Drive, libido and natural testosterone</span></div>
-          <div class="cc"><b>Shilajit</b><span>Raw energy and stamina</span></div>
-          <div class="cc"><b>Ashwagandha</b><span>Lowers the cortisol that drags T down</span></div>
-          <div class="cc"><b>Sea Moss</b><span>The mineral foundation</span></div>
+        <img class="graph" src="img/uptrend.jpg" alt="Your 90-day trajectory" style="border-radius:12px;border:1px solid var(--line)">
+
+        <h3 class="sech">What men report</h3>
+        <div class="stats">
+          <div class="s"><div class="v">84%</div><div class="k">Steadier energy</div></div>
+          <div class="s"><div class="v">79%</div><div class="k">Stronger drive &amp; libido</div></div>
+          <div class="s"><div class="v">76%</div><div class="k">More drive to train</div></div>
         </div>
-        <img class="heroimg" src="img/hero.jpg" alt="" style="margin-top:8px;height:210px">
-        <h3 class="sech">Get your plan</h3>
-        ${tiers}
+        <div class="statnote">Based on an Atlas customer survey.</div>
+        <div class="ph">[ real verified reviews / star rating to be wired in before launch ]</div>
+
+        <h3 class="sech">Choose your plan</h3>
+        <div class="qsel-h">Select quantity</div>
+        <div class="qcards">
+          <div class="qcard" data-vid="53757279437143" data-price="49" data-was="" data-save=""><img src="img/bottle-1.jpg" alt="1 bottle of Atlas"><div class="qn">1 Bottle</div><div class="qs">1-month supply</div></div>
+          <div class="qcard sel" data-vid="53757279469911" data-price="98" data-was="147" data-save="49"><div class="qbadge">Most popular</div><img src="img/bottle-3.jpg" alt="3 bottles of Atlas"><div class="qn">3 Bottles</div><div class="qs">3-month supply</div><div class="qd">Buy 2, get 1 free</div></div>
+          <div class="qcard" data-vid="53757279502679" data-price="147" data-was="294" data-save="147"><img src="img/bottle-6.jpg" alt="6 bottles of Atlas"><div class="qn">6 Bottles</div><div class="qs">6-month supply</div><div class="qd">Buy 3, get 3 free</div></div>
+        </div>
+        <div class="qprice"><span class="pnow" id="qp-now">$98</span><span class="pwas" id="qp-was">$147</span><span class="psave" id="qp-save">Save $49</span></div>
+        <button class="btn" id="qp-cta">Start my plan →</button>
+        <div class="gtee">90 days to feel it, or every penny back · free US shipping on 3+</div>
+        <div class="pay">Visa · Mastercard · Amex · PayPal</div>
+        <div class="nopill"><span>No needles</span><span>No prescription</span><span>No TRT</span></div>
+
         <div class="gbox"><b>90-Day Money-Back Guarantee</b><p>Take it every day for 90 days. If you don’t feel the difference, every penny back. No half-empty-bottle clause, no hoops.</p></div>
         <div class="faq">
           <details open><summary>Is this TRT or hormones?</summary><p>No. No prescription, no synthetic hormones, no needles. Atlas supports your body’s own testosterone production.</p></details>
           <details><summary>How fast will I feel it?</summary><p>Most men notice energy first, often within the first few weeks. Drive and recovery build over the following month. Give it the full 90 days.</p></details>
           <details><summary>What if it doesn’t work for me?</summary><p>You’ve got 90 days to feel it, or your money back.</p></details>
           <details><summary>How do I take it?</summary><p>One capsule a day, with or without food. That’s it.</p></details>
-        </div>`;
+        </div>
+        <div class="foot">&dagger; These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure or prevent any disease. This quiz is a self-check based on your answers, not a medical diagnosis.</div>`;
     }
   }
 }
@@ -421,8 +495,13 @@ function after(sc){
   if(sc.type==='results') track('ViewContent',{content_name:'quiz_results'});
   if(sc.type==='email'){ cont(()=>{ S.a.email=screen.querySelector('#em').value; submitLead(S.a.email); go(1); }); const sk=screen.querySelector('#skip'); if(sk) sk.onclick=()=>go(1); }
   if(sc.type==='offer'){
-    screen.querySelectorAll('.tier').forEach(t=>{ t.classList.toggle('sel',t.dataset.variant===S.tier); t.onclick=()=>{ S.tier=t.dataset.variant; screen.querySelectorAll('.tier').forEach(x=>x.classList.toggle('sel',x.dataset.variant===S.tier)); }; });
-    screen.querySelectorAll('.cta-go').forEach(b=>b.onclick=()=>{ track('InitiateCheckout'); location.href='https://tryatlasnutrition.com/cart/'+S.tier+':1'; });
+    var cards=screen.querySelectorAll('.qcard');
+    function qpick(c){ cards.forEach(x=>x.classList.remove('sel')); c.classList.add('sel'); S.tier=c.dataset.vid;
+      screen.querySelector('#qp-now').textContent='$'+c.dataset.price;
+      var w=screen.querySelector('#qp-was'); if(c.dataset.was){ w.textContent='$'+c.dataset.was; w.style.display=''; } else { w.style.display='none'; }
+      var sv=screen.querySelector('#qp-save'); if(c.dataset.save){ sv.textContent='Save $'+c.dataset.save; sv.style.display=''; } else { sv.style.display='none'; } }
+    cards.forEach(c=>c.onclick=()=>qpick(c));
+    var cta=screen.querySelector('#qp-cta'); if(cta){ cta.onclick=()=>{ track('InitiateCheckout'); location.href='https://tryatlasnutrition.com/cart/'+S.tier+':1'; }; }
   }
   if(sc.type==='profile'){ const v=+screen.querySelector('#cont').dataset.v; countUp(screen.querySelector('#sn'),v); setTimeout(()=>screen.querySelector('#mk').style.left=v+'%',350); setTimeout(()=>screen.querySelectorAll('.rbar i').forEach(i=>i.style.width=i.dataset.w+'%'),450); cont(()=>go(1)); }
   if(sc.type==='calc') runCalc();
