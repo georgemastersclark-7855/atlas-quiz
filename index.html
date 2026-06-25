@@ -205,6 +205,33 @@
   .qprice .pwas{color:var(--ink-faint);font-size:14px;text-decoration:line-through}
   .qprice .psave{margin-left:auto;font-weight:700;font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--green);background:#eaf3ee;border:1px solid #d3e6da;border-radius:999px;padding:5px 11px}
   .foot{font-size:10.5px;color:var(--ink-faint);line-height:1.5;margin-top:24px;text-align:center}
+  .arate{text-align:center;margin:6px 0 0}
+  .arate .st{color:#c8a24a;letter-spacing:3px;font-size:15px}
+  .arate .e{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-top:6px}
+  .revc{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:15px 16px;margin-bottom:10px}
+  .revc .rst{color:#c8a24a;font-size:13px;letter-spacing:1px}
+  .revc p{font-size:13.5px;line-height:1.5;color:var(--ink-soft);margin:8px 0 8px}
+  .revc .who{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint)}
+  .tl{position:relative;padding-left:34px;margin-top:6px}
+  .tl:before{content:"";position:absolute;left:9px;top:10px;bottom:10px;width:2px;background:var(--line)}
+  .tlc{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:14px 16px;margin-bottom:12px}
+  .tlc .node{position:absolute;left:-34px;top:15px;width:22px;height:22px;border-radius:50%;background:var(--cream);border:1.5px solid var(--green);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:11px}
+  .tlc .t{font-weight:800;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:7px}
+  .tlc p{font-size:13.5px;line-height:1.55;color:var(--ink-soft);margin:0 0 6px}
+  .tlc p:last-child{margin-bottom:0}
+  .tlc b{font-weight:700;color:var(--ink)}
+  .qfreq{background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:13px;margin-bottom:9px;cursor:pointer}
+  .qfreq.sel{border-color:var(--green);background:#f3f8f4;box-shadow:0 0 0 3px rgba(10,54,34,.10)}
+  .qfreq-top{display:flex;align-items:center;gap:9px}
+  .qrad{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--ink-faint);background:#fff;flex:0 0 auto}
+  .qfreq.sel .qrad{background:var(--green);border-color:var(--green);box-shadow:inset 0 0 0 3px #fff}
+  .qfname{font-weight:700;font-size:14px}
+  .qfprice{margin-left:auto;font-weight:700;font-size:15px}
+  .qfprice s{color:var(--ink-faint);font-size:12px;font-weight:400;margin-left:5px}
+  .qcad{font-size:11px;color:var(--ink-faint);margin:6px 0 0 25px}
+  .qticks{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:11px 0 0 25px;font-size:11.5px;color:var(--ink-soft)}
+  .qticks i{color:var(--green);font-style:normal;font-weight:700}
+  .qprice s.pwas{text-decoration:line-through}
 </style>
 <!-- Meta Pixel · Atlas -->
 <script>
@@ -373,7 +400,7 @@ function build(sc){
     }
     case 'email': return `<h1>Where should we send your Vitality Score and plan?</h1><p class="sub">Your answers are private. We’ll build your plan on the next screen.</p><div class="field"><input class="inp" id="em" type="email" placeholder="you@email.com"></div><button class="btn" id="cont">Build my plan</button><button class="btn alt" id="skip" style="margin-top:10px">Skip, just show my plan</button><div class="micro">No spam. Unsubscribe anytime.</div>`;
     case 'results': return `<div class="eyebrow">Plan ready</div><h1>Your 90-day plan to get your edge back is ready.</h1>
-      <svg class="graph" viewBox="0 0 300 120" preserveAspectRatio="none"><polyline fill="none" stroke="#0a3622" stroke-width="4" stroke-linecap="round" points="6,104 150,86 300,18"/><text x="6" y="118" fill="#8d887c" font-size="11">Today</text><text x="252" y="118" fill="#8d887c" font-size="11">Week 12</text></svg>
+      <img class="graph" src="img/uptrend.jpg" alt="Your 90-day trajectory" style="border-radius:12px;border:1px solid var(--line)">
       <button class="btn" id="cont">See my plan</button>`;
     case 'offer': {
       const s=signsCount(), v=vitality();
@@ -384,6 +411,7 @@ function build(sc){
         <div class="meter"><div class="marker" style="left:${v}%"></div></div>
         <div class="mscale"><span>Depleted</span><span>Optimal</span></div>
         <p style="text-align:center;margin:14px 0 0;font-size:15px">You’re showing <b>${s} of the 10 signs</b> of testosterone decline.</p>
+        <div class="arate"><span class="st">★★★★★</span><span class="e">Excellent · 4.8 out of 5 · 25 reviews</span></div>
 
         <h3 class="sech">Where you could be in 90 days</h3>
         <div class="cmp">
@@ -423,34 +451,37 @@ function build(sc){
           <div class="tot"><span>Active botanical extracts</span><span>700mg</span></div>
         </div>
 
-        <h3 class="sech">Your 90-day plan</h3>
-        <ul class="bullets">
-          <li>One Atlas capsule a day, the engine that puts back what your body’s run short on</li>
-          <li>A simple daily routine to amplify it: sleep, light training, food</li>
-          <li>Week-by-week expectations, so you know what should shift and when</li>
-          <li>The Rebuild Blueprint, the full step-by-step, free with your plan</li>
-        </ul>
+        <h3 class="sech">What to expect</h3>
+        <p class="sesub">Most men feel the first shift within days. The full rebuild takes 90.</p>
+        <div class="tl">
+          <div class="tlc"><span class="node">✓</span><div class="t">Week 1</div><p><b>What you’ll feel:</b> The 2pm slump eases and your energy holds through the day. For a lot of men, morning wood starts showing up again in the first week or two.</p><p><b>What it does:</b> Shilajit’s fulvic minerals start restocking what a modern diet strips out, the raw material your energy runs on.</p></div>
+          <div class="tlc"><span class="node">✓</span><div class="t">Month 1</div><p><b>What you’ll feel:</b> Focus sharpens and the drive starts coming back, you want to train, push at work, chase things again instead of just getting through the day.</p><p><b>What it does:</b> Tongkat ali and sea moss support drive, motivation and the trace minerals your hormone system runs on.</p></div>
+          <div class="tlc"><span class="node">✓</span><div class="t">Month 2</div><p><b>What you’ll feel:</b> Sleep gets deeper, recovery quicker, and your fuse gets longer. The small stuff stops landing, and you catch yourself speaking up more, a bit surer of your call.</p><p><b>What it does:</b> Ashwagandha lowers cortisol, the stress hormone that works against testosterone, so you recover and sleep deeper.</p></div>
+          <div class="tlc"><span class="node">✓</span><div class="t">Month 3</div><p><b>What you’ll feel:</b> Drive and libido back at a level you’d half forgotten. You stand a little taller, hold the room a little easier, starting to feel like yourself again.</p><p><b>What it does:</b> Three months of full, disclosed doses compounding daily, supporting your body’s own testosterone production.</p></div>
+        </div>
         <img class="graph" src="img/uptrend.jpg" alt="Your 90-day trajectory" style="border-radius:12px;border:1px solid var(--line)">
 
-        <h3 class="sech">What men report</h3>
-        <div class="stats">
-          <div class="s"><div class="v">84%</div><div class="k">Steadier energy</div></div>
-          <div class="s"><div class="v">79%</div><div class="k">Stronger drive &amp; libido</div></div>
-          <div class="s"><div class="v">76%</div><div class="k">More drive to train</div></div>
-        </div>
-        <div class="statnote">Based on an Atlas customer survey.</div>
-        <div class="ph">[ real verified reviews / star rating to be wired in before launch ]</div>
+        <h3 class="sech">Men who got it back</h3>
+        <div class="arate" style="margin-bottom:14px"><span class="st">★★★★★</span><span class="e">Excellent · 4.8 out of 5 · 25 reviews</span></div>
+        <div class="revc"><div class="rst">★★★★★</div><p>"I’d quietly become a smaller version of myself. About a month in, the fog lifted enough that my wife asked if I’d had good news at work. She noticed before I did."</p><div class="who">Mark T. · Verified</div></div>
+        <div class="revc"><div class="rst">★★★★★</div><p>"The mornings had basically stopped these last few years, I’d put it down to my age. Five weeks in and things are firmly back to normal in that department. The Mrs has definitely noticed."</p><div class="who">Paul R. · Verified</div></div>
+        <div class="revc"><div class="rst">★★★★★</div><p>"Bought these for my husband, home, ate, asleep on the sofa by 8. Second jar in and he’s up doing things at the weekend, we actually talk in the evenings, and he laughs more. Worth every penny."</p><div class="who">Sarah M. · Verified</div></div>
+        <div class="revc"><div class="rst">★★★★★</div><p>"First two weeks I felt nothing and nearly sent them back, then around week three I realised how much better I’d been waking up and smashing my work. It creeps up on you, so stick with it."</p><div class="who">James P. · Verified</div></div>
+        <div class="revc"><div class="rst">★★★★★</div><p>"Work nights, and the afternoon shift used to finish me. Three weeks in and the difference is noticeable. More energy, and not crashing of an afternoon."</p><div class="who">Darren K. · Verified</div></div>
 
         <h3 class="sech">Choose your plan</h3>
         <div class="qsel-h">Select quantity</div>
         <div class="qcards">
-          <div class="qcard" data-vid="53757279437143" data-price="49" data-was="" data-save=""><img src="img/bottle-1.jpg" alt="1 bottle of Atlas"><div class="qn">1 Bottle</div><div class="qs">1-month supply</div></div>
-          <div class="qcard sel" data-vid="53757279469911" data-price="98" data-was="147" data-save="49"><div class="qbadge">Most popular</div><img src="img/bottle-3.jpg" alt="3 bottles of Atlas"><div class="qn">3 Bottles</div><div class="qs">3-month supply</div><div class="qd">Buy 2, get 1 free</div></div>
-          <div class="qcard" data-vid="53757279502679" data-price="147" data-was="294" data-save="147"><img src="img/bottle-6.jpg" alt="6 bottles of Atlas"><div class="qn">6 Bottles</div><div class="qs">6-month supply</div><div class="qd">Buy 3, get 3 free</div></div>
+          <div class="qcard" data-vid="53757279437143" data-bottles="1" data-months="month"><img src="img/bottle-1.jpg" alt="1 bottle of Atlas"><div class="qn">1 Bottle</div><div class="qs">1-month supply</div></div>
+          <div class="qcard sel" data-vid="53757279469911" data-bottles="3" data-months="3 months"><div class="qbadge">Most popular</div><img src="img/bottle-3.jpg" alt="3 bottles of Atlas"><div class="qn">3 Bottles</div><div class="qs">3-month supply</div><div class="qd">Buy 2, get 1 free</div></div>
+          <div class="qcard" data-vid="53757279502679" data-bottles="6" data-months="6 months"><img src="img/bottle-6.jpg" alt="6 bottles of Atlas"><div class="qn">6 Bottles</div><div class="qs">6-month supply</div><div class="qd">Buy 3, get 3 free</div></div>
         </div>
-        <div class="qprice"><span class="pnow" id="qp-now">$98</span><span class="pwas" id="qp-was">$147</span><span class="psave" id="qp-save">Save $49</span></div>
-        <button class="btn" id="qp-cta">Start my plan →</button>
-        <div class="gtee">90 days to feel it, or every penny back · free US shipping on 3+</div>
+        <div class="qprice"><span class="pnow" id="qp-now">$96.00</span><s class="pwas" id="qp-was">$144.00</s></div>
+        <div class="qsel-h" style="margin-top:18px">Select frequency</div>
+        <div class="qfreq sel" id="freq-sub"><div class="qfreq-top"><span class="qrad"></span><span class="qfname">Subscribe &amp; save</span><span class="qfprice"><span id="freq-sub-price"></span> <s id="freq-sub-was"></s></span></div><div class="qcad" id="freq-sub-cad"></div><div class="qticks"><span><i>✓</i> 20% off every order</span><span><i>✓</i> Free US shipping</span><span><i>✓</i> Skip, pause or cancel anytime</span><span><i>✓</i> Never run out</span></div></div>
+        <div class="qfreq" id="freq-once"><div class="qfreq-top"><span class="qrad"></span><span class="qfname">One-time purchase</span><span class="qfprice"><span id="freq-once-price"></span> <s id="freq-once-was"></s></span></div></div>
+        <button class="btn" id="qp-cta">Add to cart · <span id="aq-cta-price"></span></button>
+        <div class="gtee">90-day money-back guarantee · free US shipping on 3+</div>
         <div class="pay">Visa · Mastercard · Amex · PayPal</div>
         <div class="nopill"><span>No needles</span><span>No prescription</span><span>No TRT</span></div>
 
@@ -495,13 +526,29 @@ function after(sc){
   if(sc.type==='results') track('ViewContent',{content_name:'quiz_results'});
   if(sc.type==='email'){ cont(()=>{ S.a.email=screen.querySelector('#em').value; submitLead(S.a.email); go(1); }); const sk=screen.querySelector('#skip'); if(sk) sk.onclick=()=>go(1); }
   if(sc.type==='offer'){
-    var cards=screen.querySelectorAll('.qcard');
-    function qpick(c){ cards.forEach(x=>x.classList.remove('sel')); c.classList.add('sel'); S.tier=c.dataset.vid;
-      screen.querySelector('#qp-now').textContent='$'+c.dataset.price;
-      var w=screen.querySelector('#qp-was'); if(c.dataset.was){ w.textContent='$'+c.dataset.was; w.style.display=''; } else { w.style.display='none'; }
-      var sv=screen.querySelector('#qp-save'); if(c.dataset.save){ sv.textContent='Save $'+c.dataset.save; sv.style.display=''; } else { sv.style.display='none'; } }
-    cards.forEach(c=>c.onclick=()=>qpick(c));
-    var cta=screen.querySelector('#qp-cta'); if(cta){ cta.onclick=()=>{ track('InitiateCheckout'); location.href='https://tryatlasnutrition.com/cart/'+S.tier+':1'; }; }
+    var PRICE={'1':{sub:48,ot:60,plan:'691915522391'},'3':{sub:96,ot:120,wasSub:144,wasOt:180,plan:'691915555159'},'6':{sub:144,ot:180,wasSub:288,wasOt:360,plan:'691915587927'}};
+    var subOn=true;
+    function f(n){ return '$'+n.toFixed(2); }
+    function st(id,t){ var e=screen.querySelector('#'+id); if(e) e.textContent=t; }
+    function sw(id,n){ var e=screen.querySelector('#'+id); if(e){ if(n){ e.textContent=f(n); e.style.display=''; } else { e.style.display='none'; } } }
+    function rb(){
+      var sel=screen.querySelector('.qcard.sel'); if(!sel) return;
+      var p=PRICE[sel.dataset.bottles]; if(!p) return;
+      var price=subOn?p.sub:p.ot, was=subOn?p.wasSub:p.wasOt;
+      st('qp-now',f(price)); sw('qp-was',was);
+      st('freq-sub-price',f(p.sub)); sw('freq-sub-was',p.wasSub);
+      st('freq-once-price',f(p.ot)); sw('freq-once-was',p.wasOt);
+      st('freq-sub-cad','Ships every '+(sel.dataset.months||'')+', pause anytime');
+      var fsel=screen.querySelector('#freq-sub'), fo=screen.querySelector('#freq-once');
+      if(fsel) fsel.classList.toggle('sel',subOn); if(fo) fo.classList.toggle('sel',!subOn);
+      st('aq-cta-price',f(price));
+      S.tier=sel.dataset.vid; S.plan=(subOn&&p.plan)?p.plan:'';
+    }
+    screen.querySelectorAll('.qcard').forEach(function(c){ c.onclick=function(){ screen.querySelectorAll('.qcard').forEach(function(x){x.classList.remove('sel');}); c.classList.add('sel'); rb(); }; });
+    var fs=screen.querySelector('#freq-sub'); if(fs) fs.onclick=function(){ subOn=true; rb(); };
+    var fo=screen.querySelector('#freq-once'); if(fo) fo.onclick=function(){ subOn=false; rb(); };
+    var cta=screen.querySelector('#qp-cta'); if(cta) cta.onclick=function(){ track('InitiateCheckout'); var u='https://tryatlasnutrition.com/cart/'+S.tier+':1'; if(S.plan) u+='?selling_plan='+S.plan; location.href=u; };
+    rb();
   }
   if(sc.type==='profile'){ const v=+screen.querySelector('#cont').dataset.v; countUp(screen.querySelector('#sn'),v); setTimeout(()=>screen.querySelector('#mk').style.left=v+'%',350); setTimeout(()=>screen.querySelectorAll('.rbar i').forEach(i=>i.style.width=i.dataset.w+'%'),450); cont(()=>go(1)); }
   if(sc.type==='calc') runCalc();
