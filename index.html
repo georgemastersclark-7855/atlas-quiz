@@ -77,7 +77,7 @@
   .bimg{height:128px;background:#ece7dc;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-faint);font-size:11px;margin-bottom:10px}
   .btile span{font-size:14px;font-weight:600;padding:0 8px;display:block;line-height:1.3}
   .btile.sel span{color:var(--green)}
-  .graph{width:100%;height:128px;margin:6px 0 4px}
+  .graph{width:100%;height:auto;display:block;margin:10px 0 4px}
   .ringwrap{display:flex;flex-direction:column;align-items:center;gap:18px;padding:24px 0}
   .ring{transform:rotate(-90deg)}
   .pct{font-family:var(--serif);font-size:42px;font-weight:800;color:var(--green)}
@@ -151,6 +151,22 @@
   .faq summary::after{content:"+";position:absolute;right:2px;top:12px;color:var(--ink-faint);font-size:18px}
   .faq details[open] summary::after{content:"–"}
   .faq p{font-size:14px;color:var(--ink-soft);margin:0 0 14px;line-height:1.55}
+  /* Desktop two-pane */
+  .stage{min-height:100vh}
+  .brandpane{display:none}
+  @media(min-width:900px){
+    html,body{background:var(--green-d)}
+    .stage{display:flex;align-items:flex-start}
+    .brandpane{display:flex;flex:1;position:sticky;top:0;height:100vh;align-self:flex-start;overflow:hidden;background:var(--green-d) center/cover no-repeat;align-items:flex-end;color:var(--cream)}
+    .brandpane:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,30,18,.30),rgba(0,30,18,.92))}
+    .brandpane .bp{position:relative;z-index:2;padding:54px 54px 58px;max-width:540px}
+    .bp-logo{font-family:var(--sans);font-weight:800;letter-spacing:.14em;font-size:20px;margin-bottom:20px}
+    .bp-head{font-family:var(--serif);font-style:italic;font-weight:400;font-size:36px;line-height:1.13;margin:0 0 14px}
+    .bp-sub{font-size:15px;line-height:1.6;color:rgba(242,242,240,.82);max-width:420px;margin:0}
+    .app{max-width:none;flex:0 0 540px;width:540px}
+  }
+  @media(min-width:1280px){ .app{flex:0 0 600px;width:600px} }
+  @media(min-width:900px){ .cover-hero{display:none} }
 </style>
 <!-- Meta Pixel · Atlas -->
 <script>
@@ -163,6 +179,14 @@ fbq('init','2272989850108695');fbq('track','PageView');
 </script>
 </head>
 <body>
+<div class="stage">
+<aside class="brandpane" style="background-image:url(img/hero.png)">
+  <div class="bp">
+    <div class="bp-logo">ATLAS™</div>
+    <div class="bp-head">Do you have the signs of low testosterone?</div>
+    <p class="bp-sub">A 2-minute check against the 10 signs most men write off as ageing. Get your score, and a plan to reverse it.</p>
+  </div>
+</aside>
 <div class="app" id="app">
   <div class="top">
     <div class="brandrow">
@@ -173,6 +197,7 @@ fbq('init','2272989850108695');fbq('track','PageView');
     <div class="step" id="step"></div>
   </div>
   <div class="wrap"><div class="screen" id="screen"></div></div>
+</div>
 </div>
 
 <script>
@@ -191,19 +216,20 @@ function submitLead(email){
 const SCREENS = [
  {type:'cover'},
  {type:'intro'},
- {type:'celebrate'},
- {type:'single', key:'energy', q:'Do you hit a wall most afternoons, running on caffeine and willpower by 2pm?', opts:['Yes, most days','Sometimes','No'], bad:['Yes, most days']},
- {type:'card', variant:'seedA'},
+ {type:'single', key:'energy', q:'How’s your energy by mid-afternoon?', opts:['Still going strong','Dips, but I push through','Crashes, I run on caffeine'], bad:['Dips, but I push through','Crashes, I run on caffeine']},
  {type:'bodytype'},
- {type:'card', variant:'seedB'},
- {type:'slider', key:'focus', q:'How sharp is your mental focus compared to five years ago?', sub:'Concentration, memory, staying on task.', lo:'Foggy', hi:'Razor sharp'},
- {type:'single', key:'mood', q:'Shorter fuse or flatter moods than you used to have?', opts:['Yes','A bit','No'], bad:['Yes']},
- {type:'single', key:'drive', q:'Your drive, the edge to chase, build and compete, is…', opts:['Still firing','Flickering','Mostly gone','I can barely remember it'], bad:['Flickering','Mostly gone','I can barely remember it']},
- {type:'card', variant:'warn'},
+ {type:'single', key:'drive', q:'How’s your drive, the urge to chase, build and compete?', opts:['Firing','Comes and goes','Mostly flat','Not really there'], bad:['Comes and goes','Mostly flat','Not really there']},
+ {type:'card', variant:'why'},
+ {type:'single', key:'mood', q:'How even are your mood and temper these days?', opts:['Steady, I handle stress well','A bit short-fused or flat','Irritable, low mood and anxiety are common'], bad:['A bit short-fused or flat','Irritable, low mood and anxiety are common']},
+ {type:'single', key:'sleep', q:'How well are you sleeping?', opts:['Out cold, wake up rested','Restless, wake up tired','Wired at night, drained all day'], bad:['Restless, wake up tired','Wired at night, drained all day']},
+ {type:'slider', key:'focus', q:'How’s your focus and concentration these days?', sub:'Concentration, memory, staying on task.', lo:'Foggy', hi:'Razor sharp'},
+ {type:'single', key:'strength', q:'How’s your strength and recovery these days?', sub:'In the gym, or just day to day.', opts:['Strong, bounce back fast','Holding, but stalled','Weaker, and I ache for days'], bad:['Holding, but stalled','Weaker, and I ache for days']},
+ {type:'card', variant:'cost'},
  {type:'single', key:'libido', q:'How’s your sex drive these days?', opts:['Strong','Up and down','Low','Gone'], bad:['Up and down','Low','Gone']},
  {type:'single', key:'morning', q:'How often do you wake up with morning wood?', opts:['Most mornings','Sometimes','Rarely','Can’t remember the last time'], bad:['Sometimes','Rarely','Can’t remember the last time']},
- {type:'card', variant:'research'},
- {type:'card', variant:'fixable'},
+ {type:'single', key:'erections', q:'How reliable are your erections?', opts:['Reliable, no issues','Hit and miss','Often a struggle'], bad:['Hit and miss','Often a struggle']},
+ {type:'single', key:'confidence', q:'How’s your confidence day to day?', opts:['Solid','Patchy','Low'], bad:['Patchy','Low']},
+ {type:'card', variant:'good'},
  {type:'calc'},
  {type:'profile'},
  {type:'email'},
@@ -254,7 +280,7 @@ function build(sc){
       <div class="eyebrow">Low Testosterone Check</div>
       <h1>Do you have the signs of low testosterone?</h1>
       <p class="sub">Most men have a few and write it off as age. Take the check, see how many of the 10 signs you’re showing, and get a plan to reverse them.</p>
-      <img class="heroimg" src="img/hero.png" alt="">
+      <img class="heroimg cover-hero" src="img/hero.png" alt="">
       <button class="btn" id="cont">Start the check →</button>
       <div class="micro">8 quick questions · about 90 seconds · no email to start</div>`;
     case 'intro': return `
@@ -297,7 +323,7 @@ function build(sc){
     case 'profile': {
       const s=signsCount(), v=vitality();
       const col=v<40?'var(--red)':v<65?'var(--amber)':'var(--green)';
-      const rows=[['Energy',S.a.energy==='No'?70:30],['Drive',S.a.drive==='Still firing'?72:26],['Focus',(S.a.focus||5)*10],['Composition',S.a.bodyScore>=2?26:S.a.bodyScore===1?46:64],['Confidence',s>5?24:58]];
+      const rows=[['Energy',S.a.energy==='Still going strong'?70:S.a.energy==='Dips, but I push through'?44:28],['Drive',S.a.drive==='Firing'?72:S.a.drive==='Comes and goes'?48:26],['Focus',(S.a.focus||5)*10],['Composition',S.a.bodyScore>=2?26:S.a.bodyScore===1?46:64],['Confidence',S.a.confidence==='Solid'?64:S.a.confidence==='Patchy'?42:24]];
       return `<div class="eyebrow" style="text-align:center">Your results</div><h2 style="text-align:center">${verdict()}</h2>
         <div class="score-num" id="sn" style="color:${col}">--</div>
         <div class="meter"><div class="marker" id="mk"></div></div>
@@ -366,25 +392,24 @@ function build(sc){
   }
 }
 function cardVariant(v){
-  if(v==='seedA') return `<div class="eyebrow">Why this happens</div>
-    <h2>After 30, your testosterone drops about 1% every year.</h2>
-    <svg class="graph" viewBox="0 0 300 120" preserveAspectRatio="none"><polyline fill="none" stroke="#bc3b2e" stroke-width="3" points="6,26 150,64 294,98"/><text x="6" y="16" fill="#8d887c" font-size="11">Age 30</text><text x="250" y="114" fill="#8d887c" font-size="11">Now</text></svg>
-    <p class="sub" style="margin-top:6px">It doesn’t crash, it slips, a little every year. By your 40s a chunk of your drive, energy and edge is simply gone, which is why the man in the mirror slowly stops matching the one in your head.</p>
+  if(v==='why') return `<div class="eyebrow">Why this happens</div>
+    <h2>It traces back to one thing: testosterone.</h2>
+    <svg class="graph" viewBox="0 0 300 150">
+      <line x1="6" y1="138" x2="294" y2="138" stroke="#e0dccf" stroke-width="1"/>
+      <path d="M10,28 L150,80 L290,124 L290,138 L10,138 Z" fill="rgba(168,68,47,.09)"/>
+      <polyline fill="none" stroke="#bc3b2e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="10,28 150,80 290,124"/>
+      <circle cx="290" cy="124" r="4" fill="#bc3b2e"/>
+      <text x="10" y="18" fill="#8d887c" font-size="11">Age 30</text>
+      <text x="262" y="119" fill="#8d887c" font-size="11">Now</text>
+    </svg>
+    <p class="sub" style="margin-top:10px">After 30 it slips about 1% a year, so slowly you write it off as age. But that slip is what drains your energy, softens the middle and dulls your drive, and it’s why the training and diet that used to work stop working.</p>
     <button class="btn" id="cont">Continue</button>`;
-  if(v==='seedB') return `<div class="eyebrow">Why the belly won’t budge</div>
-    <h2>Testosterone decides where your body stores fat.</h2>
-    <div class="card"><p>When it drops, your body parks fat around your middle and clings to it. That’s why the diet and training that used to work stop working. You can’t out-train a hormone that’s telling your body to hold on.</p></div>
+  if(v==='cost') return `<div class="eyebrow">What it’s costing you</div>
+    <div class="card warn"><div class="icon warn">!</div><h2>Left alone, it compounds.</h2><p>It doesn’t hold steady. It keeps slipping year after year: less muscle, less drive, lower mood. The men still sharp at work, in the gym and in the bedroom aren’t lucky, they’re running on a full tank while most men run on empty and call it ageing.</p></div>
     <button class="btn" id="cont">Continue</button>`;
-  if(v==='warn') return `<div class="eyebrow">What it’s costing you</div>
-    <div class="card warn"><div class="icon warn">!</div><h2>Low testosterone doesn’t sit still. It compounds.</h2><p>Left alone, it keeps dropping year after year, and the gap widens: less muscle, less drive, lower mood, weaker performance. The men pulling ahead at work, in the gym and in the bedroom aren’t lucky. They’re running on a full tank while most men run on empty and call it ageing.</p><div class="slidein" style="overflow:hidden;border:0;background:none;padding:0"><img src="img/hero.png" alt=""></div></div>
-    <button class="btn" id="cont">Continue</button>`;
-  if(v==='research') return `<div class="eyebrow">The science</div>
-    <h2>Four natural compounds have the most research behind them.</h2>
-    <p class="sub">For supporting the body’s own testosterone: tongkat ali, shilajit, ashwagandha and sea moss. Each earns its place for a reason, not for the label.</p>
-    <button class="btn" id="cont">Continue</button>`;
-  if(v==='fixable') return `<div class="eyebrow">The good news</div>
-    <h2>Your body hasn’t stopped. It’s under-supplied.</h2>
-    <div class="card"><p>It still knows how to make testosterone. It’s just running short on the raw materials the job needs. Put those back, consistently, and the system can pick back up, no needle, no prescription.</p></div>
+  if(v==='good') return `<div class="eyebrow">The good news</div>
+    <h2>Your body hasn’t stopped, it’s under-supplied.</h2>
+    <div class="card"><p>It still knows how to make testosterone. It’s just short on the raw materials. Put those back, the four compounds with the most research behind them, tongkat ali, shilajit, ashwagandha and sea moss, and the system can pick back up. No needles, no prescription.</p></div>
     <button class="btn" id="cont">See my results</button>`;
 }
 function after(sc){
@@ -425,7 +450,7 @@ function showCalcModal(resume){
 backBtn.onclick=()=>{ if(S.i>0){ S.i--; render(); } };
 (function deeplink(){
   const j=new URLSearchParams(location.search).get('screen'); if(!j) return;
-  Object.assign(S.a,{age:'40-49',energy:'Yes, most days',bodyScore:3,focus:3,mood:'Yes',drive:'Mostly gone',libido:'Low',morning:'Rarely'});
+  Object.assign(S.a,{age:'40-49',energy:'Crashes, I run on caffeine',bodyScore:3,drive:'Mostly flat',mood:'Irritable, low mood and anxiety are common',sleep:'Wired at night, drained all day',focus:3,strength:'Weaker, and I ache for days',libido:'Low',morning:'Rarely',erections:'Often a struggle',confidence:'Low'});
   const map={report:'profile',score:'profile'}; const t=map[j]||j;
   const i=SCREENS.findIndex(s=>(s.type===t)||(s.variant===t)); if(i>=0) S.i=i;
 })();
