@@ -394,14 +394,8 @@ function build(sc){
 function cardVariant(v){
   if(v==='why') return `<div class="eyebrow">Why this happens</div>
     <h2>After 30, your testosterone drops about 1% a year - every year.</h2>
-    <svg class="graph" viewBox="0 0 300 150">
-      <line x1="6" y1="138" x2="294" y2="138" stroke="#e0dccf" stroke-width="1"/>
-      <path d="M10,28 L150,80 L290,124 L290,138 L10,138 Z" fill="rgba(168,68,47,.09)"/>
-      <polyline fill="none" stroke="#bc3b2e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="10,28 150,80 290,124"/>
-      <circle cx="290" cy="124" r="4" fill="#bc3b2e"/>
-      <text x="10" y="18" fill="#8d887c" font-size="11">Age 30</text>
-      <text x="262" y="119" fill="#8d887c" font-size="11">Now</text>
-    </svg>
+    <img class="graph" src="img/graph.jpg" alt="Chart showing average testosterone declining with age" style="border-radius:12px;border:1px solid var(--line)">
+
     <p class="sub" style="margin-top:10px">It slips so slowly you write it off as age. But it compounds, and men today start from a lower baseline than their fathers did at the same age. That steady decline is what quietly drains your energy, drive and edge, and why the training and diet that used to work stop paying off.</p>
     <button class="btn" id="cont">Continue</button>`;
   if(v==='cost') return `<div class="eyebrow">What it’s costing you</div>
